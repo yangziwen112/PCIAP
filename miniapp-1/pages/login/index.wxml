@@ -1,0 +1,28 @@
+<view class="page-login">
+  <view class="login-card">
+    <view class="brand">PCIAP</view>
+    <view class="hint">欢迎登录</view>
+
+    <button class="secondary-btn pressable" bindtap="onWeChatLogin" disabled="{{isWeChatLoading}}" hover-class="is-pressed" hover-start-time="0" hover-stay-time="80">
+      <block wx:if="{{isWeChatLoading}}">
+        <view class="spinner" />
+        <text style="margin-left: 12rpx;">正在授权…</text>
+      </block>
+      <block wx:else>
+        使用微信资料一键登录
+      </block>
+    </button>
+
+    <block wx:if="{{showManual}}">
+      <button class="avatar-btn pressable" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar" hover-class="is-pressed" hover-start-time="0" hover-stay-time="80">
+        <image class="avatar" src="{{avatarUrl || 'https://res.wx.qq.com/a/wx_fed/assets/res/OTE0YTAw.png'}}" mode="aspectFill"/>
+      </button>
+      <view class="field">
+        <input class="input" placeholder="请输入昵称" value="{{nickname}}" bindinput="onInputName" focus-class="input-focus"/>
+      </view>
+      <button class="primary-btn pressable" disabled="{{!canSubmit}}" bindtap="onLogin" hover-class="is-pressed" hover-start-time="0" hover-stay-time="80">手动登录</button>
+    </block>
+  </view>
+
+  <view class="legal">登录即表示同意《用户协议》和《隐私政策》</view>
+</view>

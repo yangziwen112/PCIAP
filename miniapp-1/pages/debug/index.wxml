@@ -1,0 +1,34 @@
+<!--pages/debug/index.wxml-->
+<view class="container">
+  <view class="header">
+    <text class="title">雲函數調試頁面</text>
+  </view>
+  
+  <view class="section">
+    <text class="section-title">測試結果</text>
+    <view class="test-item">
+      <text>雲函數狀態: {{testResults.cloudFunction || '未測試'}}</text>
+    </view>
+    <view class="test-item" wx:if="{{testResults.error}}">
+      <text>錯誤信息: {{testResults.error}}</text>
+    </view>
+  </view>
+  
+  <view class="section">
+    <text class="section-title">操作按鈕</text>
+    <button class="btn" bindtap="testCloudFunction">測試雲函數</button>
+    <button class="btn" bindtap="testDatabase">測試數據庫</button>
+    <button class="btn" bindtap="initDatabase">初始化數據庫</button>
+    <button class="btn" bindtap="clearLogs">清除日誌</button>
+  </view>
+  
+  <view class="section">
+    <text class="section-title">調試日誌</text>
+    <view class="logs">
+      <view class="log-item" wx:for="{{logs}}" wx:key="index">
+        <text class="log-time">{{item.time}}</text>
+        <text class="log-message">{{item.message}}</text>
+      </view>
+    </view>
+  </view>
+</view>

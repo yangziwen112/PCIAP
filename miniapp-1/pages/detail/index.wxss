@@ -1,0 +1,87 @@
+.page-detail {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding-bottom: 120rpx;
+}
+.page-detail .poster {
+  width: 100%;
+}
+
+.detail-card {
+  margin: 24rpx 24rpx 20rpx;
+  padding: 28rpx 26rpx;
+  background: #ffffff;
+  border: 2rpx solid rgba(99, 102, 241, 0.18);
+  border-radius: 24rpx;
+  color: #0b1b3a;
+  box-shadow: 0 12rpx 24rpx rgba(76, 102, 190, 0.18);
+}
+.page-detail .title {
+  font-size: 36rpx;
+  font-weight: 700;
+  margin-bottom: 14rpx;
+  color: #0f172a;
+}
+.page-detail .meta view {
+  color: #475569;
+  font-size: 24rpx;
+  margin: 6rpx 0;
+}
+.page-detail .body {
+  margin-top: 18rpx;
+  color: #1e293b;
+  line-height: 1.7;
+}
+
+.source-btn {
+  margin-top: 22rpx;
+  color: #ffffff;
+  background: linear-gradient(135deg, #6366f1 0%, #7c59c6 100%);
+  border: none;
+  border-radius: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10rpx;
+  box-shadow: 0 8rpx 16rpx rgba(76, 102, 190, 0.30);
+}
+.btn-icon {  
+  font-size: 28rpx;  
+}
+.btn-label {  
+  font-size: 28rpx;  
+}
+
+.action-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(10rpx);
+  border-top: 2rpx solid rgba(255, 255, 255, 0.18);
+  display: flex;
+  gap: 12rpx;
+  padding: 12rpx 16rpx 32rpx;
+}
+.action-bar button {
+  flex: 1;
+  color: #ffffff;
+  background: linear-gradient(135deg, #6b8cff 0%, #7c59c6 100%);
+  border: none;
+  border-radius: 14rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10rpx;
+  box-shadow: 0 8rpx 16rpx rgba(76, 102, 190, 0.35);
+}
+.fav-btn {
+  background: linear-gradient(135deg, #fb7185 0%, #f472b6 100%);
+}
+.share-btn {
+  background: linear-gradient(135deg, #60a5fa 0%, #818cf8 100%);
+}
+.calendar-btn {
+  background: linear-gradient(135deg, #34d399 0%, #22d3ee 100%);
+}

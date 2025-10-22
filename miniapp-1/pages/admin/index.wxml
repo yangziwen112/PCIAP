@@ -1,0 +1,46 @@
+﻿<view class="admin-page">
+  <view class="header">
+    <text class="title">数据管理</text>
+    <text class="subtitle">创建和管理示例数据</text>
+  </view>
+
+  <view class="actions">
+    <button class="action-btn primary" bindtap="createSampleData">
+      <text class="btn-icon"></text>
+      <text class="btn-text">创建示例数据</text>
+    </button>
+    
+    <button class="action-btn secondary" bindtap="viewData">
+      <text class="btn-icon"></text>
+      <text class="btn-text">查看数据统计</text>
+    </button>
+    
+    <button class="action-btn danger" bindtap="clearData">
+      <text class="btn-icon"></text>
+      <text class="btn-text">清空所有数据</text>
+    </button>
+  </view>
+
+  <view class="status" wx:if="{{status}}">
+    <text class="status-text">{{status}}</text>
+  </view>
+
+  <view class="data-info" wx:if="{{dataInfo}}">
+    <view class="info-item">
+      <text class="info-label">标签数量:</text>
+      <text class="info-value">{{dataInfo.tags}}</text>
+    </view>
+    <view class="info-item">
+      <text class="info-label">来源数量:</text>
+      <text class="info-value">{{dataInfo.sources}}</text>
+    </view>
+    <view class="info-item">
+      <text class="info-label">横幅数量:</text>
+      <text class="info-value">{{dataInfo.banners}}</text>
+    </view>
+    <view class="info-item">
+      <text class="info-label">内容数量:</text>
+      <text class="info-value">{{dataInfo.contents}}</text>
+    </view>
+  </view>
+</view>

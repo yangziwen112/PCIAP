@@ -1,0 +1,11 @@
+{
+	"ios": {
+		"name": "PCIAP"
+	},
+	"android": {
+		"name": "PCIAP"
+	},
+	"common": {
+		"name": "PCIAP"
+	}
+}

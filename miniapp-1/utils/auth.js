@@ -1,0 +1,82 @@
+const USER_KEY = 'userInfo'
+const LOGIN_STATUS_KEY = 'isLoggedIn'
+
+// 获取用户信息
+export function getUser() {
+  try {
+    return wx.getStorageSync(USER_KEY) || null
+  } catch (_) { 
+    return null 
+  }
+}
+
+// 判断是否已登录（新版）
+export function isLoggedIn() {
+  try {
+    const isLogged = wx.getStorageSync(LOGIN_STATUS_KEY)
+    const user = getUser()
+    return !!(isLogged && user && user.userId)
+  } catch (_) {
+    return false
+  }
+}
+
+// 确保用户已登录，否则跳转登录页
+export async function ensureLogin() {
+  if (isLoggedIn()) {
+    return getUser()
+  }
+  
+  const pages = getCurrentPages()
+  const current = pages[pages.length - 1]
+  const path = `/${current.route}`
+  const query = Object.entries(current.options || {}).map(([k,v])=>`${k}=${encodeURIComponent(v)}`).join('&')
+  const redirect = query ? `${path}?${query}` : path
+  
+  wx.reLaunch({ 
+    url: `/pages/auth-login/index?redirect=${encodeURIComponent(redirect)}` 
+  })
+  throw new Error('NEED_LOGIN')
+}
+
+// 保存用户信息
+export function saveUser(user) {
+  wx.setStorageSync(USER_KEY, user)
+  wx.setStorageSync(LOGIN_STATUS_KEY, true)
+  const app = getApp()
+  if (app) {
+    app.globalData.user = user
+  }
+}
+
+// 清除用户信息（退出登录）
+export function clearUser() {
+  wx.removeStorageSync(USER_KEY)
+  wx.removeStorageSync(LOGIN_STATUS_KEY)
+  const app = getApp()
+  if (app) {
+    app.globalData.user = null
+  }
+}
+
+// 获取用户ID
+export function getUserId() {
+  const user = getUser()
+  return user ? user.userId : null
+}
+
+// 判断是否是管理员
+export function isAdmin() {
+  try {
+    const user = getUser()
+    return !!(user && user.role === 'admin')
+  } catch (_) {
+    return false
+  }
+}
+
+// 获取用户角色
+export function getUserRole() {
+  const user = getUser()
+  return user ? user.role : null
+} 

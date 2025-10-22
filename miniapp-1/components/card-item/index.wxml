@@ -1,0 +1,37 @@
+<view class="card-item" bindtap="onTap">
+  <!-- 卡片头部 -->
+  <view class="card-header">
+    <view class="category-badge category-{{item.category}}">
+      <text class="category-text">{{item.categoryText}}</text>
+    </view>
+    <view class="favorite-btn" bindtap="onToggleFavorite" data-id="{{item._id}}" catchtap="true">
+      <text class="favorite-icon">{{item.favored ? '❤️' : '🤍'}}</text>
+    </view>
+  </view>
+
+  <!-- 卡片内容 -->
+  <view class="card-content">
+    <view class="title">{{item.title}}</view>
+    <view class="summary">{{item.summary}}</view>
+    
+    <!-- 标签区域 -->
+    <view class="tags-container">
+      <block wx:for="{{item.tags}}" wx:key="*this" wx:for-item="tag">
+        <view class="tag-item">
+          <text class="tag-text">{{tag}}</text>
+        </view>
+      </block>
+      <view class="campus-tag">
+        <text class="campus-text">{{item.campus === 'haidian' ? '海淀' : item.campus === 'fengtai' ? '丰台' : '全校'}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 卡片底部 -->
+  <view class="card-footer">
+    <view class="location-item">
+      <text class="location-icon">📍</text>
+      <text class="location-text">{{item.location || '地点待定'}}</text>
+    </view>
+  </view>
+</view> 

@@ -1,0 +1,195 @@
+.card-item {
+  background: #fff;
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+  margin-bottom: 24rpx;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border: 1rpx solid #f0f0f0;
+}
+
+.card-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6rpx;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  border-radius: 20rpx 20rpx 0 0;
+}
+
+.card-item:active {
+  transform: translateY(-4rpx);
+  box-shadow: 0 8rpx 30rpx rgba(0, 0, 0, 0.12);
+}
+
+/* 卡片头部 */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24rpx 24rpx 0;
+}
+
+.category-badge {
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 22rpx;
+  font-weight: 500;
+}
+
+.category-competition {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+}
+
+.category-recruit {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: #fff;
+}
+
+.category-academic {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  color: #fff;
+}
+
+.category-sports {
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+  color: #fff;
+}
+
+.category-teacher-cert {
+  background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+  color: #fff;
+}
+
+.category-volunteer {
+  background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+  color: #333;
+}
+
+.favorite-btn {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.favorite-btn:active {
+  transform: scale(0.9);
+  background: rgba(255, 192, 203, 0.3);
+}
+
+.favorite-icon {
+  font-size: 28rpx;
+}
+
+/* 卡片内容 */
+.card-content {
+  padding: 20rpx 24rpx;
+}
+
+.title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #1a1a1a;
+  line-height: 1.4;
+  margin-bottom: 16rpx;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.summary {
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.5;
+  margin-bottom: 20rpx;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+/* 标签区域 */
+.tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  margin-bottom: 20rpx;
+}
+
+.tag-item {
+  background: #f8f9fa;
+  border: 1rpx solid #e9ecef;
+  border-radius: 16rpx;
+  padding: 6rpx 12rpx;
+}
+
+.tag-text {
+  font-size: 22rpx;
+  color: #495057;
+}
+
+.campus-tag {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 16rpx;
+  padding: 6rpx 12rpx;
+}
+
+.campus-text {
+  font-size: 22rpx;
+  color: #fff;
+  font-weight: 500;
+}
+
+/* 卡片底部 - 简化版只显示地点 */
+.card-footer {
+  padding: 0 24rpx 20rpx;
+}
+
+.location-item {
+  display: flex;
+  align-items: center;
+  padding: 16rpx 20rpx;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+  border-radius: 12rpx;
+  border-left: 4rpx solid #667eea;
+}
+
+.location-icon {
+  font-size: 28rpx;
+  margin-right: 12rpx;
+}
+
+.location-text {
+  font-size: 26rpx;
+  color: #333;
+  font-weight: 500;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 响应式适配 */
+@media (max-width: 375px) {
+  .card-content {
+    padding: 16rpx 20rpx;
+  }
+  
+  .title {
+    font-size: 28rpx;
+  }
+  
+  .summary {
+    font-size: 24rpx;
+  }
+}

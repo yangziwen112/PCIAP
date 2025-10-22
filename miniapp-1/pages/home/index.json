@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "notice-banner": "../../components/notice-banner/index",
+    "card-item": "../../components/card-item/index"
+  },
+  "enablePullDownRefresh": true,
+  "onReachBottomDistance": 100
+} 

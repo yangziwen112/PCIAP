@@ -1,0 +1,12 @@
+<view class="notice-banner" wx:if="{{items && items.length}}">
+  <swiper autoplay interval="4000" vertical circular>
+    <block wx:for="{{items}}" wx:key="_id">
+      <swiper-item>
+        <view class="notice-item" bindtap="onTap" data-link="{{item.link}}">
+          <text class="tag">重要</text>
+          <text class="title">{{item.title}}</text>
+        </view>
+      </swiper-item>
+    </block>
+  </swiper>
+</view> 

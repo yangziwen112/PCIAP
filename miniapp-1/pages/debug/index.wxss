@@ -1,0 +1,73 @@
+/* pages/debug/index.wxss */
+.container {
+  padding: 20rpx;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 40rpx;
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.section {
+  background-color: white;
+  margin-bottom: 20rpx;
+  padding: 20rpx;
+  border-radius: 10rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.1);
+}
+
+.section-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+  display: block;
+}
+
+.test-item {
+  margin-bottom: 10rpx;
+  padding: 10rpx;
+  background-color: #f8f8f8;
+  border-radius: 5rpx;
+}
+
+.btn {
+  margin: 10rpx 0;
+  background-color: #007AFF;
+  color: white;
+  border-radius: 10rpx;
+}
+
+.logs {
+  max-height: 400rpx;
+  overflow-y: auto;
+}
+
+.log-item {
+  margin-bottom: 10rpx;
+  padding: 10rpx;
+  background-color: #f8f8f8;
+  border-radius: 5rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.log-time {
+  font-size: 24rpx;
+  color: #666;
+  margin-bottom: 5rpx;
+}
+
+.log-message {
+  font-size: 26rpx;
+  color: #333;
+  word-break: break-all;
+}

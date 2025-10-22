@@ -1,0 +1,19 @@
+{
+  "appid": "wx3e0ab3ad750ab3f2",
+  "projectname": "民大通",
+  "setting": {
+    "urlCheck": true,
+    "es6": true,
+    "enhance": true,
+    "minified": true,
+    "newFeature": true,
+    "coverView": true,
+    "showShadowRootInWxmlPanel": true,
+    "postcss": true
+  },
+  "compileType": "miniprogram",
+  "libVersion": "3.0.0",
+  "cloudfunctionRoot": "miniapp-1/cloudfunctions/",
+  "cloudfunctionTemplateRoot": "miniapp-1/cloudfunctions/",
+  "condition": {}
+}

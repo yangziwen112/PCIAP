@@ -1,0 +1,204 @@
+.page-home {  
+  min-height: 100vh;  
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);  
+  padding-bottom: 20rpx;  
+}  
+  
+/* 顶部区域 */  
+.header-section {  
+  padding: 40rpx 32rpx 32rpx;  
+  background: transparent;  
+} 
+.welcome-text {  
+  margin-bottom: 24rpx;  
+}  
+  
+.greeting {  
+  display: block;  
+  font-size: 36rpx;  
+  font-weight: 600;  
+  color: #fff;  
+  margin-bottom: 6rpx;  
+  text-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.1);  
+} 
+.subtitle {  
+  display: block;  
+  font-size: 26rpx;  
+  color: rgba(255, 255, 255, 0.9);  
+}  
+
+/* 搜索 */  
+.search-container {  
+  padding-top: 12rpx;  
+}  
+.search-box {  
+  display: flex;  
+  align-items: center;  
+  padding: 18rpx 22rpx;  
+  background: rgba(255, 255, 255, 0.18);  
+  border: 2rpx solid rgba(255, 255, 255, 0.25);  
+  border-radius: 999rpx;  
+  backdrop-filter: blur(8rpx);  
+}  
+.search-icon {  
+  margin-right: 12rpx;  
+  font-size: 26rpx;  
+  color: #ffffff;  
+}  
+.search-input {  
+  flex: 1;  
+  font-size: 26rpx;  
+  color: #ffffff;  
+}  
+.search-input::placeholder {  
+  color: rgba(255, 255, 255, 0.75);  
+}  
+
+/* 標籤過濾器 */  
+.tag-filter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 28rpx 24rpx;
+  gap: 12rpx;
+}
+
+.tag-list {  
+  display: flex;  
+  gap: 16rpx;  
+  overflow-x: auto;  
+  padding-bottom: 8rpx;
+  flex: 1;
+}  
+
+.tag-item {  
+  display: flex;  
+  flex-direction: column;  
+  align-items: center;  
+  justify-content: center;  
+  padding: 20rpx 16rpx;  
+  background: rgba(255, 255, 255, 0.16);  
+  border: 2rpx solid rgba(255, 255, 255, 0.24);  
+  border-radius: 20rpx;  
+  box-shadow: 0 6rpx 12rpx rgba(0, 0, 0, 0.08);  
+  color: #fff;  
+  min-width: 100rpx;  
+  transition: all 0.3s ease;  
+  white-space: nowrap;  
+}  
+
+.tag-item.active {  
+  background: rgba(255, 255, 255, 0.28);  
+  border-color: rgba(255, 255, 255, 0.5);  
+  box-shadow: 0 8rpx 20rpx rgba(0, 0, 0, 0.15);  
+  transform: translateY(-2rpx);  
+}  
+
+.tag-item:active {  
+  transform: scale(0.95);  
+}  
+
+.tag-icon {  
+  font-size: 36rpx;  
+  margin-bottom: 6rpx;  
+}  
+
+.tag-text {  
+  font-size: 22rpx;  
+}  
+
+/* 管理员发布按钮 */
+.publish-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20rpx 16rpx;
+  background: rgba(255, 107, 107, 0.8);
+  border: 2rpx solid rgba(255, 107, 107, 0.5);
+  border-radius: 20rpx;
+  box-shadow: 0 6rpx 12rpx rgba(255, 69, 58, 0.2);
+  color: #fff;
+  min-width: 100rpx;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.publish-btn:active {
+  background: rgba(255, 107, 107, 1);
+  transform: scale(0.95);
+  box-shadow: 0 8rpx 20rpx rgba(255, 69, 58, 0.3);
+}
+
+.publish-icon {
+  font-size: 36rpx;
+  margin-bottom: 6rpx;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.publish-label {
+  font-size: 22rpx;
+}
+
+/* 内容区域基础间距占位，避免紧贴边缘 */  
+.content-section {  
+  padding: 0 24rpx;  
+}  
+
+/* 创建数据引导按钮主题化 */  
+.create-data-section {  
+  margin: 24rpx 0;  
+  padding: 24rpx;  
+  background: rgba(255, 255, 255, 0.14);  
+  border: 2rpx solid rgba(255, 255, 255, 0.22);  
+  border-radius: 20rpx;  
+  color: #fff;  
+}  
+.create-tip {  
+  margin-bottom: 16rpx;  
+}  
+.create-text {  
+  display: block;  
+  font-size: 28rpx;  
+  font-weight: 600;  
+  margin-bottom: 4rpx;  
+}  
+.create-subtitle {  
+  font-size: 24rpx;  
+  opacity: 0.9;  
+}  
+
+.init-btn, .test-btn, .write-btn, .create-btn, .check-btn, .clean-btn, .user-btn, .empty-btn {  
+  margin-top: 16rpx;  
+  color: #ffffff;  
+  background: linear-gradient(135deg, #6b8cff 0%, #7c59c6 100%);  
+  border: none;  
+  border-radius: 14rpx;  
+  box-shadow: 0 8rpx 16rpx rgba(76, 102, 190, 0.35);  
+}  
+.create-btn {  
+  background: linear-gradient(135deg, #6ee7b7 0%, #3b82f6 100%);  
+  color: #0b1b3a;  
+}
+.clean-btn {
+  background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+  color: #ffffff;
+}
+.user-btn {
+  background: linear-gradient(135deg, #a78bfa 0%, #ec4899 100%);
+  color: #ffffff;
+}
+.empty-btn {  
+  margin-top: 20rpx;  
+}  
+
+/* 加载更多 & 空状态文案色彩 */  
+.loading-text, .no-more text, .empty-text, .empty-subtitle, .debug-text {  
+  color: #ffffff;  
+}

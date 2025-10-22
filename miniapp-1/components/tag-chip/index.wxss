@@ -1,0 +1,16 @@
+.tag-chip {
+  padding: 2px 8px;
+  background: #F3F4F6;
+  color: #374151;
+  border-radius: 999px;
+  font-size: 12px;
+  margin-right: 6px;
+}
+.tag-chip.campus {
+  background: #EEF2FF;
+  color: #2F6BFF;
+}
+.tag-chip.success {
+  background: #ECFDF5;
+  color: #10B981;
+} 

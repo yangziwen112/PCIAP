@@ -1,0 +1,34 @@
+<view class="page-detail">
+  <image class="poster" src="{{detail.posterUrl}}" mode="widthFix" wx:if="{{detail.posterUrl}}"/>
+
+  <view class="detail-card">
+    <view class="title">{{detail.title}}</view>
+    <view class="meta">
+      <view>🏛️ {{detail.organizerName}}</view>
+      <view>🕒 {{detail.timeText}}</view>
+      <view>📍 {{detail.location}}</view>
+    </view>
+    <view class="body" wx:if="{{detail.bodyRichText}}">
+      <rich-text nodes="{{detail.bodyRichText}}"></rich-text>
+    </view>
+    <button class="source-btn" wx:if="{{detail.sourceUrl}}" bindtap="onOpenSource">
+      <text class="btn-icon">🔗</text>
+      <text class="btn-label">查看原文</text>
+    </button>
+  </view>
+
+  <view class="action-bar">
+    <button class="fav-btn" bindtap="onToggleFavorite">
+      <text class="btn-icon">{{detail.favored ? '❤️' : '🤍'}}</text>
+      <text class="btn-label">{{detail.favored ? '已收藏' : '收藏'}}</text>
+    </button>
+    <button class="share-btn" open-type="share">
+      <text class="btn-icon">↗️</text>
+      <text class="btn-label">分享</text>
+    </button>
+    <button class="calendar-btn" bindtap="onAddToCalendar">
+      <text class="btn-icon">📅</text>
+      <text class="btn-label">添加</text>
+    </button>
+  </view>
+</view>

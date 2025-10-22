@@ -1,0 +1,96 @@
+.page-login {
+  min-height: 100vh;
+  background: #f6f7fb;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40rpx 32rpx;
+}
+.login-card {
+  width: 100%;
+  max-width: 640rpx;
+  background: #ffffff;
+  border-radius: 28rpx;
+  padding: 40rpx 32rpx;
+  box-shadow: 0 24rpx 48rpx rgba(15, 23, 42, 0.06);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.brand { font-size: 40rpx; font-weight: 700; color: #0f172a; letter-spacing: 2rpx; }
+.hint { margin-top: 10rpx; font-size: 26rpx; color: #64748b; }
+
+.avatar-btn { margin: 32rpx 0 12rpx; background: transparent; border: none; }
+.avatar {
+  width: 128rpx;
+  height: 128rpx;
+  border-radius: 50%;
+  background: #e5e7eb;
+  box-shadow: 0 10rpx 20rpx rgba(2, 6, 23, 0.08);
+}
+
+.field { width: 100%; margin-top: 20rpx; }
+.input {
+  width: 100%;
+  background: #f8fafc;
+  border: 2rpx solid #e2e8f0;
+  border-radius: 16rpx;
+  padding: 22rpx 24rpx;
+  font-size: 28rpx;
+  color: #0f172a;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
+}
+.input:focus {
+  transform: scale(1.02);
+  border-color: #94a3b8;
+  box-shadow: 0 10rpx 20rpx rgba(15, 23, 42, 0.08);
+}
+
+.primary-btn {
+  width: 100%;
+  margin-top: 28rpx;
+  background: #0f172a;
+  color: #ffffff;
+  border: none;
+  border-radius: 18rpx;
+  padding: 22rpx 0;
+  font-size: 30rpx;
+  letter-spacing: 2rpx;
+  box-shadow: 0 20rpx 32rpx rgba(2, 6, 23, 0.10);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease;
+}
+.primary-btn[disabled] { opacity: 0.4; }
+
+.secondary-btn {
+  width: 100%;
+  margin-top: 18rpx;
+  background: #ffffff;
+  color: #0f172a;
+  border: 2rpx solid #e2e8f0;
+  border-radius: 18rpx;
+  padding: 22rpx 0;
+  font-size: 28rpx;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
+}
+.secondary-btn[disabled] { opacity: 0.6; }
+
+.spinner {
+  width: 28rpx;
+  height: 28rpx;
+  border-radius: 50%;
+  border: 4rpx solid #e2e8f0;
+  border-top-color: #0f172a;
+  animation: spin 0.8s linear infinite;
+  display: inline-block;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.legal { margin-top: 20rpx; font-size: 22rpx; color: #94a3b8; }
+
+/* 通用按压缩放态 */
+.pressable { transform: scale(1); }
+.is-pressed { transform: scale(0.98); box-shadow: 0 10rpx 20rpx rgba(2, 6, 23, 0.10) !important; }

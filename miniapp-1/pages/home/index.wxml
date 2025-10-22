@@ -1,0 +1,116 @@
+﻿<view class="page-home">
+  <!-- 顶部搜索区域 -->
+  <view class="header-section">
+    <view class="welcome-text" bindlongpress="toggleDevMode">
+      <text class="greeting">你好，欢迎来到PCIAP</text>
+      <text class="subtitle">发现更多精彩校园活动</text>
+    </view>
+    <view class="search-container">
+      <view class="search-box">
+        <text class="search-icon">🔍</text>
+        <input class="search-input" placeholder="搜索活动、通知、来源..." bindconfirm="onSearch" confirm-type="search"/>
+      </view>
+    </view>
+  </view>
+
+  <!-- 標籤過濾器 -->
+  <view class="tag-filter">
+    <view class="tag-list">
+      <view 
+        class="tag-item {{selectedTag === item.id ? 'active' : ''}}" 
+        wx:for="{{tags}}" 
+        wx:key="id"
+        bindtap="onTagClick" 
+        data-tag="{{item.id}}"
+      >
+        <view class="tag-icon">{{item.icon}}</view>
+        <text class="tag-text">{{item.name}}</text>
+      </view>
+    </view>
+    
+    <!-- 管理员发布按钮 -->
+    <view wx:if="{{ isAdmin }}" class="publish-btn" bindtap="goToPublish">
+      <text class="publish-icon">➕</text>
+      <text class="publish-label">发布</text>
+    </view>
+  </view>
+
+  <!-- 轮播横幅 -->
+  <view class="banner-section" wx:if="{{banners.length > 0}}">
+    <notice-banner items="{{banners}}" />
+  </view>
+
+  <!-- 内容区域 -->
+  <view class="content-section">
+    <!-- <view class="section-header"> -->
+      <!-- <text class="section-title">推荐内容</text>
+      <view class="refresh-btn" bindtap="onRefresh">
+        <text class="refresh-icon">🔄</text>
+      </view> -->
+    <!-- </view> --> 
+
+    <!-- 调试信息 -->
+    <view class="debug-info" wx:if="{{debugInfo}}">
+      <text class="debug-text">{{debugInfo}}</text>
+    </view>
+
+    <!-- 创建数据按钮（开发模式） -->
+    <view class="create-data-section" wx:if="{{isDevelopment}}">
+      <view class="create-tip">
+        <text class="create-text">还没有内容数据</text>
+        <text class="create-subtitle">请按顺序执行以下步骤</text>
+      </view>
+      <button class="init-btn" bindtap="initCollections">1. 初始化集合</button>
+      <button class="test-btn" bindtap="testConnection">2. 测试连接</button>
+      <button class="write-btn" bindtap="testWrite">3. 测试写入</button>
+      <button class="create-btn" bindtap="onCreateData">4. 创建示例数据（含用户）</button>
+      <button class="check-btn" bindtap="checkDatabase">5. 检查数据库</button>
+      <button class="clean-btn" bindtap="cleanDuplicates">6. 清理重复数据</button>
+    </view>
+
+    <!-- 加载状态 -->
+    <block wx:if="{{loading && list.length === 0 && !showCreateBtn}}">
+      <view class="skeleton-container">
+        <view class="skeleton-card" wx:for="{{[1,2,3]}}" wx:key="*this"></view>
+      </view>
+    </block>
+
+    <!-- 内容列表 -->
+    <block wx:else>
+      <view class="content-list" wx:if="{{filteredList.length > 0}}">
+        <block wx:for="{{filteredList}}" wx:key="_id">
+          <view class="content-item">
+            <card-item item="{{item}}" bind:favorite="onFavorite" />
+          </view>
+        </block>
+      </view>
+      
+      <!-- 加载更多状态 -->
+      <view class="load-more" wx:if="{{filteredList.length > 0}}">
+        <block wx:if="{{hasMore}}">
+          <view class="loading-more" wx:if="{{loading}}">
+            <text class="loading-text">正在加载更多...</text>
+          </view>
+          <view class="load-more-btn" wx:else bindtap="loadMore">
+            <text>点击加载更多</text>
+          </view>
+        </block>
+        <block wx:else>
+          <view class="no-more">
+            <text>— 没有更多了 —</text>
+          </view>
+        </block>
+      </view>
+    </block>
+
+    <!-- 空状态 -->
+    <view class="empty-state" wx:if="{{!loading && filteredList.length === 0 && !showCreateBtn}}">
+      <view class="empty-icon">📝</view>
+      <text class="empty-text" wx:if="{{selectedTag === 'all'}}">暂无推荐内容</text>
+      <text class="empty-text" wx:else>该分类暂无内容</text>
+      <text class="empty-subtitle" wx:if="{{selectedTag === 'all'}}">试试订阅感兴趣的内容源</text>
+      <text class="empty-subtitle" wx:else>试试切换到其他分类</text>
+      <button class="empty-btn" bindtap="goToSubscription" wx:if="{{selectedTag === 'all'}}">去订阅</button>
+    </view>
+  </view>
+</view> 
