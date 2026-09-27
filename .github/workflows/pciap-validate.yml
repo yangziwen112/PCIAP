@@ -13,6 +13,12 @@ on:
 jobs:
   validate:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    concurrency:
+      group: pciap-validate-${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
     defaults:
       run:
         working-directory: miniapp-1
@@ -35,12 +41,8 @@ jobs:
           npm test --prefix cloudfunctions/crawler
       - name: Check JavaScript syntax
         run: |
-          node --check app.js
-          node --check cloudfunctions/api/index.js
-          node --check cloudfunctions/crawler/index.js
-          node --check cloudfunctions/rag/index.js
-          node --check cloudfunctions/rag/lib/audit.js
-          node --check pages/chat/index.js
+          find . -type f -name '*.js' -not -path '*/node_modules/*' -print0 \
+            | xargs -0 -r -n1 node --check
       - name: Check tracked tree for sensitive files
         working-directory: .
         run: |
