@@ -1,0 +1,53 @@
+name: validate-pciap
+
+on:
+  push:
+    paths:
+      - 'miniapp-1/**'
+      - '.github/workflows/pciap-validate.yml'
+  pull_request:
+    paths:
+      - 'miniapp-1/**'
+      - '.github/workflows/pciap-validate.yml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: miniapp-1
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: |
+            miniapp-1/cloudfunctions/rag/package-lock.json
+            miniapp-1/cloudfunctions/crawler/package-lock.json
+      - name: Install RAG dependencies
+        run: npm ci --prefix cloudfunctions/rag
+      - name: Install crawler dependencies
+        run: npm ci --prefix cloudfunctions/crawler
+      - name: Run workflow and source tests
+        run: |
+          npm test --prefix cloudfunctions/rag
+          npm test --prefix cloudfunctions/crawler
+      - name: Check JavaScript syntax
+        run: |
+          node --check app.js
+          node --check cloudfunctions/api/index.js
+          node --check cloudfunctions/crawler/index.js
+          node --check cloudfunctions/rag/index.js
+          node --check cloudfunctions/rag/lib/audit.js
+          node --check pages/chat/index.js
+      - name: Check tracked tree for sensitive files
+        working-directory: .
+        run: |
+          blocked="$(git ls-files | grep -E '(^|/)(\.env|node_modules/|.*\.(key|pem)$)' || true)"
+          if [ -n "$blocked" ]; then
+            echo "Forbidden tracked files detected:"
+            echo "$blocked"
+            exit 1
+          fi
+          echo "Known WeChat project.private.config.json files are configuration metadata, not credentials."
