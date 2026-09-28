@@ -9,8 +9,8 @@ const db = cloud.database()
 
 const MAX_ITEMS_PER_SOURCE = Number(process.env.CRAWLER_MAX_ITEMS || 20)
 const REQUEST_TIMEOUT = Number(process.env.CRAWLER_TIMEOUT || 15000)
-const DAY_MS = 24 * 60 * 60 * 1000
 const { DEFAULT_SOURCES } = require('./lib/source-catalog')
+const { isRecentOrActive, calculateFreshnessScore } = require('./lib/date-policy')
 
 const STUDENT_KEYWORDS = /报名|申报|申请|竞赛|比赛|青苗|大创|挑战杯|创新创业|教师资格|教资|考试|考场|场地安排|准考证|四六级|普通话|选课|补考|缓考|奖学金|助学金|评优|推免|保研|实习|招聘|就业|讲座|培训|招募|志愿|社会实践|校园活动|课程|教学安排|学生|本科生|研究生/
 const LOW_VALUE_KEYWORDS = /学习贯彻|党委理论|工作会议|领导班子|调研座谈|党建工作|主题教育|代表团来访|校领导会见|新闻联播|媒体聚焦|工作部署/
@@ -271,13 +271,6 @@ function isStudentRelevant(title, body, category) {
   return STUDENT_KEYWORDS.test(text)
 }
 
-function isRecentOrActive(publishTime, schedule, recencyDays) {
-  const now = Date.now()
-  const recent = publishTime > 0 && now - publishTime <= recencyDays * DAY_MS
-  const active = schedule.deadline > now || schedule.startTime > now
-  return recent || active
-}
-
 function makeTags(category, title) {
   const labels = {
     notice: '通知', competition: '竞赛', academic: '讲座', recruit: '就业',
@@ -293,12 +286,6 @@ function makeTags(category, title) {
   if (/丰台/.test(title)) tags.push('丰台校区')
   if (/海淀/.test(title)) tags.push('海淀校区')
   return tags
-}
-
-function calculateFreshnessScore(publishTime, recencyDays) {
-  if (!publishTime) return 0.2
-  const age = Math.max(0, Date.now() - publishTime) / DAY_MS
-  return Math.max(0, Math.min(1, 1 - age / Math.max(1, Number(recencyDays || 30))))
 }
 
 function calculateEvidenceScore(source, title, body, publishTime, sourceUrl) {
