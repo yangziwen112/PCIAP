@@ -1,5 +1,0 @@
-.page-home {  
-  min-height: 100vh;  
-  background: linear-gradient(135deg, #667eea 50%, #764ba2 50%);  
-  padding-bottom:20rpx;  
-} 

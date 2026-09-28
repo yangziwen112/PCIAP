@@ -11,7 +11,7 @@
     <view class="register-header">
       <text class="header-icon">📝</text>
       <text class="header-title">注册账号</text>
-      <text class="header-subtitle">加入校园活动平台</text>
+      <text class="header-subtitle">加入民大通校园信息平台</text>
     </view>
 
     <!-- 表单 -->
@@ -28,6 +28,7 @@
           value="{{username}}"
           bindinput="onUsernameInput"
           maxlength="20"
+          type="number"
         />
       </view>
 
@@ -100,29 +101,11 @@
         </view>
       </view>
 
-      <!-- 身份选择 -->
-      <view class="form-item">
-        <view class="input-label">
-          <text class="label-icon">🎭</text>
-          <text class="label-text">选择身份</text>
-        </view>
-        <view class="role-selector">
-          <view 
-            class="role-option {{role === 'student' ? 'active' : ''}}"
-            bindtap="selectRole"
-            data-role="student"
-          >
-            <text class="role-icon">🎓</text>
-            <text class="role-text">学生</text>
-          </view>
-          <view 
-            class="role-option {{role === 'admin' ? 'active' : ''}}"
-            bindtap="selectRole"
-            data-role="admin"
-          >
-            <text class="role-icon">👨‍💼</text>
-            <text class="role-text">管理员</text>
-          </view>
+      <view class="student-register-tip">
+        <text class="student-register-icon">🎓</text>
+        <view>
+          <text class="student-register-title">学生账号注册</text>
+          <text class="student-register-desc">管理员账号由平台后台统一创建，不开放自助注册。</text>
         </view>
       </view>
 

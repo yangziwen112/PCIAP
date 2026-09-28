@@ -1,116 +1,103 @@
-﻿<view class="page-home">
-  <!-- 顶部搜索区域 -->
-  <view class="header-section">
-    <view class="welcome-text" bindlongpress="toggleDevMode">
-      <text class="greeting">你好，欢迎来到PCIAP</text>
-      <text class="subtitle">发现更多精彩校园活动</text>
+<view class="page-home {{pageReady ? 'page-ready' : ''}} {{lowPerformance ? 'reduced-motion' : ''}}">
+  <view class="home-header">
+    <view>
+      <text class="eyebrow">校园信息聚合</text>
+      <text class="brand-title">民大通</text>
+      <text class="brand-subtitle">先看清来源，再决定下一步</text>
     </view>
-    <view class="search-container">
-      <view class="search-box">
-        <text class="search-icon">🔍</text>
-        <input class="search-input" placeholder="搜索活动、通知、来源..." bindconfirm="onSearch" confirm-type="search"/>
-      </view>
+    <view class="refresh-action {{refreshing ? 'rotating' : ''}}" bindtap="refreshData" aria-label="刷新资讯">↻</view>
+  </view>
+
+  <view class="search-box">
+    <text class="search-icon">⌕</text>
+    <input
+      class="search-input"
+      value="{{searchKeyword}}"
+      placeholder="搜索通知、活动或竞赛"
+      confirm-type="search"
+      bindinput="onSearchInput"
+      bindconfirm="onSearch"
+    />
+    <text class="clear-search" wx:if="{{searchKeyword}}" bindtap="clearSearch">×</text>
+  </view>
+
+  <view class="focus-card">
+    <view class="focus-copy">
+      <text class="focus-kicker">现在需要什么</text>
+      <text class="focus-title">让助手帮你先查清楚</text>
+      <text class="focus-desc">基于公开资讯回答，来源和时间会一起展示。</text>
+    </view>
+    <view class="primary-action" bindtap="goToAssistant">打开智能助手 <text>→</text></view>
+    <view class="secondary-actions">
+      <view class="secondary-action" bindtap="goToCampusWall">校园动态 <text>→</text></view>
+      <view class="secondary-action" bindtap="goToSubscription">我的订阅 <text>→</text></view>
     </view>
   </view>
 
-  <!-- 標籤過濾器 -->
-  <view class="tag-filter">
-    <view class="tag-list">
-      <view 
-        class="tag-item {{selectedTag === item.id ? 'active' : ''}}" 
-        wx:for="{{tags}}" 
-        wx:key="id"
-        bindtap="onTagClick" 
-        data-tag="{{item.id}}"
+  <view class="upcoming-panel" wx:if="{{upcomingItems.length}}">
+    <view class="section-heading">
+      <view>
+        <text class="section-title">近期事项</text>
+        <text class="section-caption">按真实来源整理的报名与活动节点</text>
+      </view>
+    </view>
+    <scroll-view scroll-x class="upcoming-scroll" enable-flex>
+      <view
+        class="upcoming-card"
+        wx:for="{{upcomingItems}}"
+        wx:key="_id"
+        data-id="{{item._id}}"
+        bindtap="openUpcoming"
       >
-        <view class="tag-icon">{{item.icon}}</view>
-        <text class="tag-text">{{item.name}}</text>
+        <view class="upcoming-meta">
+          <text class="upcoming-category">{{item.categoryText}}</text>
+          <text class="upcoming-label">{{item.nodeLabel}}</text>
+        </view>
+        <text class="upcoming-title">{{item.title}}</text>
+        <text class="upcoming-time">{{item.nodeTimeText}}</text>
+        <text class="upcoming-source">{{item.sourceName}}</text>
       </view>
-    </view>
-    
-    <!-- 管理员发布按钮 -->
-    <view wx:if="{{ isAdmin }}" class="publish-btn" bindtap="goToPublish">
-      <text class="publish-icon">➕</text>
-      <text class="publish-label">发布</text>
-    </view>
+    </scroll-view>
   </view>
 
-  <!-- 轮播横幅 -->
-  <view class="banner-section" wx:if="{{banners.length > 0}}">
-    <notice-banner items="{{banners}}" />
-  </view>
-
-  <!-- 内容区域 -->
-  <view class="content-section">
-    <!-- <view class="section-header"> -->
-      <!-- <text class="section-title">推荐内容</text>
-      <view class="refresh-btn" bindtap="onRefresh">
-        <text class="refresh-icon">🔄</text>
-      </view> -->
-    <!-- </view> --> 
-
-    <!-- 调试信息 -->
-    <view class="debug-info" wx:if="{{debugInfo}}">
-      <text class="debug-text">{{debugInfo}}</text>
+  <view class="feed-panel">
+    <view class="section-heading feed-heading">
+      <view>
+        <text class="section-title">校园资讯</text>
+        <text class="section-caption">按栏目查看公开来源和下一步行动</text>
+      </view>
     </view>
 
-    <!-- 创建数据按钮（开发模式） -->
-    <view class="create-data-section" wx:if="{{isDevelopment}}">
-      <view class="create-tip">
-        <text class="create-text">还没有内容数据</text>
-        <text class="create-subtitle">请按顺序执行以下步骤</text>
-      </view>
-      <button class="init-btn" bindtap="initCollections">1. 初始化集合</button>
-      <button class="test-btn" bindtap="testConnection">2. 测试连接</button>
-      <button class="write-btn" bindtap="testWrite">3. 测试写入</button>
-      <button class="create-btn" bindtap="onCreateData">4. 创建示例数据（含用户）</button>
-      <button class="check-btn" bindtap="checkDatabase">5. 检查数据库</button>
-      <button class="clean-btn" bindtap="cleanDuplicates">6. 清理重复数据</button>
+    <scroll-view scroll-x class="category-scroll" enable-flex>
+      <view
+        wx:for="{{tags}}"
+        wx:key="id"
+        class="category-chip {{selectedTag === item.id ? 'active' : ''}}"
+        data-tag="{{item.id}}"
+        bindtap="onTagClick"
+      >{{item.name}}</view>
+    </scroll-view>
+
+    <view class="skeleton-list" wx:if="{{loading && !list.length}}">
+      <view class="skeleton-card skeleton" wx:for="{{[1,2,3]}}" wx:key="*this"></view>
     </view>
 
-    <!-- 加载状态 -->
-    <block wx:if="{{loading && list.length === 0 && !showCreateBtn}}">
-      <view class="skeleton-container">
-        <view class="skeleton-card" wx:for="{{[1,2,3]}}" wx:key="*this"></view>
-      </view>
-    </block>
+    <view class="content-list" wx:elif="{{list.length}}">
+      <card-item
+        wx:for="{{list}}"
+        wx:key="_id"
+        item="{{item}}"
+        bind:favorite="onFavorite"
+      />
+      <view class="load-more" wx:if="{{loading}}">正在加载</view>
+      <view class="load-more tappable" wx:elif="{{hasMore}}" bindtap="loadMore">加载更多</view>
+      <view class="load-more" wx:else>已显示全部资讯</view>
+    </view>
 
-    <!-- 内容列表 -->
-    <block wx:else>
-      <view class="content-list" wx:if="{{filteredList.length > 0}}">
-        <block wx:for="{{filteredList}}" wx:key="_id">
-          <view class="content-item">
-            <card-item item="{{item}}" bind:favorite="onFavorite" />
-          </view>
-        </block>
-      </view>
-      
-      <!-- 加载更多状态 -->
-      <view class="load-more" wx:if="{{filteredList.length > 0}}">
-        <block wx:if="{{hasMore}}">
-          <view class="loading-more" wx:if="{{loading}}">
-            <text class="loading-text">正在加载更多...</text>
-          </view>
-          <view class="load-more-btn" wx:else bindtap="loadMore">
-            <text>点击加载更多</text>
-          </view>
-        </block>
-        <block wx:else>
-          <view class="no-more">
-            <text>— 没有更多了 —</text>
-          </view>
-        </block>
-      </view>
-    </block>
-
-    <!-- 空状态 -->
-    <view class="empty-state" wx:if="{{!loading && filteredList.length === 0 && !showCreateBtn}}">
-      <view class="empty-icon">📝</view>
-      <text class="empty-text" wx:if="{{selectedTag === 'all'}}">暂无推荐内容</text>
-      <text class="empty-text" wx:else>该分类暂无内容</text>
-      <text class="empty-subtitle" wx:if="{{selectedTag === 'all'}}">试试订阅感兴趣的内容源</text>
-      <text class="empty-subtitle" wx:else>试试切换到其他分类</text>
-      <button class="empty-btn" bindtap="goToSubscription" wx:if="{{selectedTag === 'all'}}">去订阅</button>
+    <view class="empty-state" wx:else>
+      <view class="empty-mark">i</view>
+      <text class="empty-title">暂时没有相关资讯</text>
+      <text class="empty-desc">可以换个栏目，或稍后重新检查真实来源。</text>
     </view>
   </view>
-</view> 
+</view>

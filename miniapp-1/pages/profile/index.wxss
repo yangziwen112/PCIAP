@@ -1,48 +1,52 @@
 .page-profile {
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding-bottom: 24rpx;
+  background: #f5f8f7;
+  padding-bottom: 40rpx;
 }
 .profile-header {
-  margin: 24rpx 24rpx 16rpx;
-  padding: 24rpx;
+  margin: 0 0 20rpx;
+  padding: 44rpx 32rpx 32rpx;
   background: #ffffff;
-  border-radius: 24rpx;
+  border-bottom: 1rpx solid #e3ece9;
   display: flex;
   align-items: center;
   gap: 20rpx;
-  box-shadow: 0 12rpx 24rpx rgba(76, 102, 190, 0.18);
 }
 .page-profile .avatar {
   width: 88rpx;
   height: 88rpx;
   border-radius: 50%;
-  background: #e5e7eb;
+  background: #e5f6f0;
 }
 .user-info { flex: 1; }
-.nickname { font-size: 34rpx; font-weight: 700; color: #0f172a; }
-.sub { margin-top: 6rpx; font-size: 24rpx; color: #64748b; }
+.nickname { font-size: 34rpx; font-weight: 650; color: #10282f; }
+.sub { margin-top: 6rpx; font-size: 24rpx; color: #71858a; }
 .login-btn {
-  background: linear-gradient(135deg, #6b8cff 0%, #7c59c6 100%);
+  background: #187c68;
   color: #ffffff;
   border: none;
   border-radius: 999rpx;
 }
 .menu-card {
-  margin: 8rpx 24rpx 24rpx;
+  margin: 0 32rpx 24rpx;
   background: #ffffff;
-  border-radius: 20rpx;
+  border: 1rpx solid #e3ece9;
+  border-radius: 16rpx;
   overflow: hidden;
-  box-shadow: 0 10rpx 20rpx rgba(76, 102, 190, 0.15);
+  box-shadow: 0 1rpx 2rpx rgba(20, 50, 54, .04);
 }
 .cell {
-  padding: 28rpx 24rpx;
-  border-bottom: 1px solid #f1f5f9;
+  min-height: 96rpx;
+  padding: 0 24rpx;
+  box-sizing: border-box;
+  border-bottom: 1rpx solid #eef3f1;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 .cell:last-child { border-bottom: none; }
-.cell-text { font-size: 28rpx; color: #0f172a; }
-.logout-text { color: #ef4444; }
-.cell-arrow { font-size: 32rpx; color: #94a3b8; }
+.cell-text { font-size: 28rpx; color: #18323a; }
+.admin-cell { background: #f8fbfa; }
+.admin-badge { margin-left: auto; margin-right: 12rpx; padding: 4rpx 10rpx; color: #187c68; background: #e5f6f0; border-radius: 999rpx; font-size: 19rpx; }
+.logout-text { color: #c96f61; }
+.cell-arrow { font-size: 32rpx; color: #99a7aa; }

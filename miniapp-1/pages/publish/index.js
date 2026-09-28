@@ -1,30 +1,40 @@
 import { callApi, toast } from '../../utils/request'
-import { isAdmin, getUserId } from '../../utils/auth'
+import { isAdmin, getUserId, waitForAuthReady } from '../../utils/auth'
 
 Page({
   data: {
-    // 表单数据
     title: '',
     description: '',
     selectedTags: [],
     selectedSource: '',
+    selectedSourceName: '请选择来源',
+    categoryIndex: 0,
+    selectedCategory: 'notice',
+    categories: [
+      { id: 'notice', name: '通知公告' },
+      { id: 'competition', name: '竞赛实践' },
+      { id: 'academic', name: '讲座学术' },
+      { id: 'recruit', name: '就业招聘' },
+      { id: 'certification', name: '考试考证' },
+      { id: 'sports', name: '文体活动' },
+      { id: 'volunteer', name: '志愿服务' },
+      { id: 'activity', name: '校园活动' }
+    ],
     images: [],
-    
-    // 元数据
+    showLink: false,
+    linkUrl: '',
     tags: [],
     sources: [],
-    
-    // UI 状态
     loading: false,
     publishing: false,
-    
-    // 权限检查
+    editingId: null,
     isAdmin: false,
-    isLoggedIn: false
+    isLoggedIn: false,
+    clickingTagId: null
   },
 
-  onLoad() {
-    // 权限检查
+  async onLoad() {
+    await waitForAuthReady()
     if (!isAdmin()) {
       wx.showModal({
         title: '权限不足',
@@ -41,66 +51,135 @@ Page({
     this.loadMetadata()
   },
 
-  // 加载标签和来源
+  checkEditMode() {
+    const pages = getCurrentPages()
+    const currentPage = pages[pages.length - 1]
+    const editId = currentPage.options.editId
+    
+    if (editId) {
+      const editingContent = wx.getStorageSync('editingContent')
+      if (editingContent) {
+        let sourceIndex = 0
+        const sources = this.data.sources
+        if (editingContent.sourceId && sources.length > 0) {
+          sourceIndex = sources.findIndex(s => s._id === editingContent.sourceId)
+          if (sourceIndex === -1) sourceIndex = 0
+        }
+        
+        const images = editingContent.images || []
+        const linkUrl = editingContent.linkUrl || ''
+        
+        const selectedTags = (editingContent.tags || []).map(value => {
+          const matched = this.data.tags.find(tag => tag._id === value || tag.name === value)
+          return matched ? matched._id : value
+        })
+
+        const categoryIndex = Math.max(this.data.categories.findIndex(item => item.id === editingContent.category), 0)
+        this.setData({
+          editingId: editId,
+          title: editingContent.title || '',
+          description: editingContent.description || '',
+          selectedTags,
+          selectedSource: editingContent.sourceId || '',
+          selectedSourceName: editingContent.sourceName || '请选择来源',
+          sourceIndex: sourceIndex,
+          categoryIndex,
+          selectedCategory: this.data.categories[categoryIndex].id,
+          images: images,
+          showLink: !!linkUrl,
+          linkUrl: linkUrl,
+          tags: this.decorateTags(this.data.tags, selectedTags)
+        })
+        wx.removeStorageSync('editingContent')
+      }
+    }
+  },
+
   async loadMetadata() {
     try {
       this.setData({ loading: true })
       const [tagsRes, sourcesRes] = await Promise.all([
-        callApi('meta/tags', {}),
-        callApi('meta/sources', {})
+        callApi('meta/tags'),
+        callApi('meta/sources')
       ])
       
+      const tags = this.decorateTags(tagsRes.list || [], this.data.selectedTags)
+      const sources = sourcesRes.list || []
+      
       this.setData({
-        tags: tagsRes.list || [],
-        sources: sourcesRes.list || [],
+        tags: tags,
+        sources: sources,
         loading: false
       })
+      this.checkEditMode()
     } catch (error) {
-      console.error('加载元数据失败:', error)
+      console.error('❌ 加载元数据失败:', error)
       toast('加载失败，请重试')
       this.setData({ loading: false })
     }
   },
 
-  // 标题输入
+  decorateTags(tags, selectedTags = this.data.selectedTags) {
+    const selected = new Set(selectedTags || [])
+    return (tags || []).map(tag => ({ ...tag, selected: selected.has(tag._id) }))
+  },
+
   onTitleChange(e) {
     this.setData({ title: e.detail.value })
   },
 
-  // 描述输入
   onDescriptionChange(e) {
     this.setData({ description: e.detail.value })
   },
 
-  // 标签点击
   onTagClick(e) {
     const tagId = e.currentTarget.dataset.id
     const { selectedTags } = this.data
-    
+    let newTags = selectedTags
     if (selectedTags.includes(tagId)) {
-      this.setData({
-        selectedTags: selectedTags.filter(id => id !== tagId)
-      })
+      newTags = selectedTags.filter(id => id !== tagId)
     } else {
-      this.setData({
-        selectedTags: [...selectedTags, tagId]
-      })
+      newTags = [...selectedTags, tagId]
     }
+    
+    this.addTagClickFeedback(tagId)
+    
+    this.setData({
+      selectedTags: newTags,
+      tags: this.decorateTags(this.data.tags, newTags)
+    })
   },
 
-  // 来源选择
+  addTagClickFeedback(tagId) {
+    this.setData({
+      clickingTagId: tagId
+    })
+    
+    setTimeout(() => {
+      this.setData({
+        clickingTagId: null
+      })
+    }, 200)
+  },
+
   onSourceChange(e) {
     const sourceIndex = e.detail.value
     const sources = this.data.sources
     if (sources[sourceIndex]) {
       this.setData({ 
         selectedSource: sources[sourceIndex]._id,
+        selectedSourceName: sources[sourceIndex].name,
         sourceIndex: sourceIndex
       })
     }
   },
 
-  // 上传图片
+  onCategoryChange(e) {
+    const categoryIndex = Number(e.detail.value) || 0
+    const category = this.data.categories[categoryIndex]
+    if (category) this.setData({ categoryIndex, selectedCategory: category.id })
+  },
+
   async onUploadImage() {
     try {
       const res = await new Promise((resolve, reject) => {
@@ -113,8 +192,6 @@ Page({
         })
       })
 
-      // 这里可以添加图片上传逻辑
-      // 目前先模拟本地存储
       const images = res.tempFilePaths
       this.setData({
         images: [...this.data.images, ...images].slice(0, 5)
@@ -126,14 +203,51 @@ Page({
     }
   },
 
-  // 删除图片
+  async uploadImageToCloud(filePath) {
+    try {
+      const cloudPath = `images/${Date.now()}_${Math.random().toString(36).slice(2)}.jpg`
+      
+      const uploadRes = await wx.cloud.uploadFile({
+        cloudPath: cloudPath,
+        filePath: filePath
+      })
+      
+      return uploadRes.fileID
+    } catch (error) {
+      console.error('❌ 图片上传失败:', error)
+      throw error
+    }
+  },
+
+  async uploadImagesToCloud(imagePaths) {
+    try {
+      if (!imagePaths || imagePaths.length === 0) {
+        return []
+      }
+
+      const uploadPromises = imagePaths.map(path => {
+        if (path.startsWith('cloud://')) {
+          return Promise.resolve(path)
+        }
+        return this.uploadImageToCloud(path)
+      })
+      
+      const uploadedUrls = await Promise.all(uploadPromises)
+      
+      return uploadedUrls
+    } catch (error) {
+      console.error('❌ 批量上传图片失败:', error)
+      toast('图片上传失败，请重试')
+      throw error
+    }
+  },
+
   onRemoveImage(e) {
     const index = e.currentTarget.dataset.index
     const images = this.data.images.filter((_, i) => i !== index)
     this.setData({ images })
   },
 
-  // 预览图片
   onPreviewImage(e) {
     const url = e.currentTarget.dataset.url
     wx.previewImage({
@@ -142,7 +256,25 @@ Page({
     })
   },
 
-  // 验证表单
+  // 切换网站链接显示/隐藏
+  onToggleLink() {
+    const showLink = !this.data.showLink
+    this.setData({ showLink })
+    if (!showLink) {
+      this.setData({ linkUrl: '' })
+    }
+  },
+
+  // 网站链接输入
+  onLinkChange(e) {
+    this.setData({ linkUrl: e.detail.value })
+  },
+
+  // 移除网站链接
+  onRemoveLink() {
+    this.setData({ showLink: false, linkUrl: '' })
+  },
+
   validateForm() {
     const { title, description, selectedTags, selectedSource } = this.data
     
@@ -179,7 +311,6 @@ Page({
     return true
   },
 
-  // 发布内容
   async onPublish() {
     if (!this.validateForm()) {
       return
@@ -189,34 +320,54 @@ Page({
       this.setData({ publishing: true })
       wx.showLoading({ title: '发布中...' })
 
-      const { title, description, selectedTags, selectedSource, images } = this.data
+      const { title, description, selectedTags, selectedSource, images, editingId, linkUrl } = this.data
       
-      const result = await callApi('content/publish', {
+      const isEditing = !!editingId
+      const apiRoute = isEditing ? 'content/edit' : 'content/publish'
+      
+      let cloudImageUrls = []
+      if (images.length > 0) {
+        wx.showLoading({ title: '上传图片中...' })
+        cloudImageUrls = await this.uploadImagesToCloud(images)
+      }
+      
+      wx.showLoading({ title: '发布中...' })
+      
+      const payload = {
         title: title.trim(),
         description: description.trim(),
         tags: selectedTags,
         sourceId: selectedSource,
-        images: images,
-        publishedBy: getUserId()
-      })
+        category: this.data.selectedCategory,
+        images: cloudImageUrls,
+        linkUrl: (linkUrl || '').trim(),
+        publishedBy: getUserId(),
+        appUserId: getUserId()
+      }
+      
+      if (isEditing) {
+        payload.contentId = editingId
+      }
+      
+      const result = await callApi(apiRoute, payload)
 
       wx.hideLoading()
       this.setData({ publishing: false })
 
       if (result.ok || result._id) {
         wx.showModal({
-          title: '发布成功',
-          content: '信息已成功发布到大厅',
+          title: isEditing ? '编辑成功' : '发布成功',
+          content: isEditing ? '信息已成功更新' : '信息已成功发布到大厅',
           showCancel: false,
           success: () => {
-            // 返回首页
             wx.switchTab({
               url: '/pages/home/index'
             })
           }
         })
       } else {
-        toast('发布失败，请重试')
+        toast(isEditing ? '编辑失败，请重试' : '发布失败，请重试')
+        console.error('API返回错误:', result)
       }
     } catch (error) {
       console.error('发布失败:', error)
@@ -226,7 +377,6 @@ Page({
     }
   },
 
-  // 草稿保存（可选）
   saveDraft() {
     const { title, description, selectedTags, selectedSource } = this.data
     wx.setStorageSync('publishDraft', {
@@ -237,9 +387,11 @@ Page({
       savedAt: Date.now()
     })
     toast('已保存为草稿')
+    setTimeout(() => {
+      wx.navigateBack()
+    }, 800)
   },
 
-  // 页面加载时恢复草稿（可选）
   restoreDraft() {
     try {
       const draft = wx.getStorageSync('publishDraft')
@@ -258,5 +410,11 @@ Page({
     } catch (error) {
       console.error('恢复草稿失败:', error)
     }
+  },
+
+  goBack() {
+    wx.navigateBack({
+      delta: 1
+    })
   }
 })

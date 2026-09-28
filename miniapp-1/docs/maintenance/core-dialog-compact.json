@@ -1,0 +1,48 @@
+﻿{
+    "generatedAt":  "2026-09-27T22:45:44.1744265+08:00",
+    "purpose":  "External maintenance snapshot for future context compression; not the internal chat context.",
+    "priorities":  [
+                       "Keep PCIAP AI knowledge-base evidence states and user display-name contract correct.",
+                       "Use Motion or GSAP patterns with platform-compatible animation and reduced-motion fallback.",
+                       "Keep project data and large dependencies on D drive; preserve C drive entry points when Junction is available."
+                   ],
+    "projects":  [
+                     {
+                         "name":  "PCIAP",
+                         "path":  "D:\\AIWorkspace\\WeChatProjects\\miniapp-1",
+                         "status":  "available",
+                         "branch":  "master",
+                         "dirty":  true,
+                         "changedItemCount":  180
+                     },
+                     {
+                         "name":  "Jushi Fund Research Open",
+                         "path":  "D:\\AIWorkspace\\fund-research-open",
+                         "status":  "available",
+                         "branch":  "master",
+                         "dirty":  false,
+                         "changedItemCount":  0
+                     }
+                 ],
+    "cDriveEntries":  [
+                          {
+                              "path":  "C:\\Users\\Administrator\\WeChatProjects\\miniapp-1",
+                              "linkType":  null,
+                              "target":  [
+
+                                         ]
+                          },
+                          {
+                              "path":  "C:\\Users\\Administrator\\Desktop\\ai\\fund-research-open",
+                              "linkType":  null,
+                              "target":  [
+
+                                         ]
+                          }
+                      ],
+    "references":  [
+                       "https://github.com/motiondivision/motion",
+                       "https://github.com/greensock/GSAP",
+                       "https://github.com/cq112233/unibestX"
+                   ]
+}

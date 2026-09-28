@@ -1,5 +1,5 @@
 import { callApi, toast } from '../../utils/request'
-import { isLoggedIn, getUserId, getUser } from '../../utils/auth'
+import { isLoggedIn, getUserId, getUser, promptLogin, waitForAuthReady } from '../../utils/auth'
 
 Page({
   data: {
@@ -12,19 +12,16 @@ Page({
     userId: ''             // 用户ID
   },
   
-  onShow() {
+  async onShow() {
+    await waitForAuthReady()
     if (!isLoggedIn()) {
-      wx.showToast({ title: '请先登录', icon: 'none' })
-      setTimeout(() => {
-        wx.reLaunch({ url: '/pages/auth-login/index' })
-      }, 1000)
+      const goingLogin = await promptLogin({ content: '登录后可以关注栏目和信息来源，首页会为你生成个性化推荐。', redirect: '/pages/subscription/index' })
+      if (!goingLogin) wx.navigateBack({ fail: () => wx.switchTab({ url: '/pages/home/index' }) })
       return
     }
     
     const userId = getUserId()
-    const user = getUser()
     this.setData({ userId })
-    console.log('当前用户:', user)
     this.load()
   },
   

@@ -148,49 +148,37 @@
   color: #999;
 }
 
-/* 身份选择 */
-.role-selector {
+.student-register-tip {
   display: flex;
-  gap: 16rpx;
-}
-
-.role-option {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  padding: 20rpx;
-  background: #f5f7fa;
-  border: 2rpx solid #e8ecf0;
-  border-radius: 16rpx;
-  transition: all 0.3s;
+  gap: 18rpx;
+  margin-bottom: 28rpx;
+  padding: 20rpx 22rpx;
+  border: 1rpx solid #dbeafe;
+  border-radius: 18rpx;
+  background: #f4f8ff;
 }
 
-.role-option.active {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-color: #667eea;
-  transform: translateY(-4rpx);
-  box-shadow: 0 8rpx 20rpx rgba(102, 126, 234, 0.3);
+.student-register-icon {
+  font-size: 38rpx;
 }
 
-.role-icon {
-  font-size: 36rpx;
-  margin-bottom: 6rpx;
+.student-register-title,
+.student-register-desc {
+  display: block;
 }
 
-.role-option.active .role-icon {
-  filter: brightness(2);
+.student-register-title {
+  color: #1e3a8a;
+  font-size: 25rpx;
+  font-weight: 650;
 }
 
-.role-text {
-  font-size: 24rpx;
-  color: #666;
-  font-weight: 500;
-}
-
-.role-option.active .role-text {
-  color: #fff;
-  font-weight: 600;
+.student-register-desc {
+  margin-top: 5rpx;
+  color: #64748b;
+  font-size: 21rpx;
+  line-height: 1.45;
 }
 
 /* 注册按钮 */

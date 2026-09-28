@@ -1,0 +1,23 @@
+name: 功能建议
+description: 提出与校园信息、AI 助手或社区流程相关的改进
+title: "[Feature] "
+labels: [enhancement, product]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: 要解决的问题
+      description: 请描述真实用户场景，而不是先指定技术方案。
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: 可验收标准
+      description: 请写出可以观察或测试的结果。
+    validations:
+      required: true
+  - type: textarea
+    id: risk
+    attributes:
+      label: 权限、隐私或数据风险

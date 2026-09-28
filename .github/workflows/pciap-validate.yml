@@ -39,6 +39,8 @@ jobs:
         run: |
           npm test --prefix cloudfunctions/rag
           npm test --prefix cloudfunctions/crawler
+          node cloudfunctions/api/test/user-display.test.js
+          node cloudfunctions/api/test/motion-presets.test.js
       - name: Check JavaScript syntax
         run: |
           find . -type f -name '*.js' -not -path '*/node_modules/*' -print0 \

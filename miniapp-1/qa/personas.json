@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "dataPolicy": "synthetic-only",
+  "description": "仅用于本地 QA 回归，不会写入云数据库，也不代表真实用户。",
+  "personas": [
+    {
+      "id": "student-reader",
+      "displayName": "林知夏",
+      "username": "20260118",
+      "role": "student",
+      "goal": "查找考试通知并判断下一步行动",
+      "queries": ["教资什么时候报名", "研究生院最近有什么通知"],
+      "actions": ["browse_feed", "search_content", "open_source", "ask_assistant", "subscribe_category"]
+    },
+    {
+      "id": "student-publisher",
+      "displayName": "周予安",
+      "username": "20260206",
+      "role": "student",
+      "goal": "发布一条可核验的校园互助信息",
+      "queries": ["信息工程学院本周有哪些讲座"],
+      "actions": ["login", "create_campus_post", "upload_image", "check_privacy_prompt"]
+    },
+    {
+      "id": "content-operator",
+      "displayName": "顾言",
+      "username": "qa-admin-01",
+      "role": "admin",
+      "goal": "检查真实来源采集状态并处理内容",
+      "queries": ["最近一次采集是否成功", "清理历史假链接"],
+      "actions": ["login", "check_crawler_status", "audit_content", "remove_demo_content"]
+    }
+  ]
+}

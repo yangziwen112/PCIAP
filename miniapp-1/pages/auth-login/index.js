@@ -7,15 +7,17 @@ Page({
     role: 'student',
     showPassword: false,
     canSubmit: false,
-    isLoading: false
+    isLoading: false,
+    redirect: ''
   },
 
   onLoad(options) {
+    const redirect = options.redirect ? decodeURIComponent(options.redirect) : ''
+    this.setData({ redirect })
     // 检查是否已登录
     const userInfo = wx.getStorageSync('userInfo')
     if (userInfo && userInfo.userId) {
-      // 已登录，跳转到首页
-      wx.switchTab({ url: '/pages/home/index' })
+      this.goAfterLogin()
     }
   },
 
@@ -90,9 +92,7 @@ Page({
         toast('登录成功')
 
         // 延迟跳转，让用户看到成功提示
-        setTimeout(() => {
-          wx.switchTab({ url: '/pages/home/index' })
-        }, 500)
+        setTimeout(() => this.goAfterLogin(), 500)
       }
     } catch (error) {
       wx.hideLoading()
@@ -103,6 +103,32 @@ Page({
         content: '网络错误，请重试',
         showCancel: false,
         confirmColor: '#667eea'
+      })
+    }
+  },
+
+  goAfterLogin() {
+    const redirect = this.data.redirect
+    const tabPages = [
+      '/pages/home/index',
+      '/pages/campus-wall/index',
+      '/pages/chat/index',
+      '/pages/messages/index',
+      '/pages/profile/index'
+    ]
+
+    if (!redirect) {
+      wx.switchTab({ url: '/pages/home/index' })
+      return
+    }
+
+    const path = redirect.split('?')[0]
+    if (tabPages.includes(path)) {
+      wx.switchTab({ url: path })
+    } else {
+      wx.redirectTo({
+        url: redirect,
+        fail: () => wx.switchTab({ url: '/pages/home/index' })
       })
     }
   },

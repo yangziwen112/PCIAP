@@ -1,14 +1,15 @@
-import { getUser, clearUser } from '../../utils/auth'
+import { getUser, clearUser, isLoggedIn, promptLogin, waitForAuthReady } from '../../utils/auth'
+const { normalizeUser } = require('../../utils/user-display')
 
 Page({
   data: {
     user: {}
   },
   
-  onShow() {
-    const user = getUser()
-    this.setData({ user: user || {} })
-    console.log('个人中心用户信息:', user)
+  async onShow() {
+    await waitForAuthReady()
+    const user = normalizeUser(getUser())
+    this.setData({ user })
   },
   
   onGoLogin() {
@@ -37,5 +38,25 @@ Page({
         }
       }
     })
+  },
+
+  goToSettings() {
+    wx.navigateTo({
+      url: '/pages/profile/settings/index'
+    })
+  },
+
+  goToAdmin() {
+    wx.navigateTo({ url: '/pages/admin/index' })
+  },
+
+  async goToProtected(e) {
+    const url = e.currentTarget.dataset.url
+    const label = e.currentTarget.dataset.label || '该功能'
+    if (!isLoggedIn()) {
+      await promptLogin({ content: `登录后可以使用${label}，相关数据会同步保存在你的账号中。`, redirect: url })
+      return
+    }
+    wx.navigateTo({ url })
   }
 }) 

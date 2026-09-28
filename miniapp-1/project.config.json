@@ -1,19 +1,51 @@
 {
-  "appid": "wx3e0ab3ad750ab3f2",
+  "appid": "touristappid",
   "projectname": "民大通",
   "setting": {
-    "urlCheck": true,
+    "urlCheck": false,
     "es6": true,
     "enhance": true,
     "minified": true,
     "newFeature": true,
     "coverView": true,
     "showShadowRootInWxmlPanel": true,
-    "postcss": true
+    "postcss": true,
+    "compileWorklet": false,
+    "uglifyFileName": false,
+    "uploadWithSourceMap": true,
+    "packNpmManually": false,
+    "packNpmRelationList": [],
+    "minifyWXSS": true,
+    "minifyWXML": true,
+    "localPlugins": false,
+    "disableUseStrict": false,
+    "useCompilerPlugins": false,
+    "condition": false,
+    "swc": false,
+    "disableSWC": true,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    }
   },
   "compileType": "miniprogram",
-  "libVersion": "3.0.0",
-  "cloudfunctionRoot": "miniapp-1/cloudfunctions/",
-  "cloudfunctionTemplateRoot": "miniapp-1/cloudfunctions/",
-  "condition": {}
+  "libVersion": "3.8.10",
+  "cloudfunctionRoot": "cloudfunctions/",
+  "condition": {},
+  "simulatorPluginLibVersion": {},
+  "packOptions": {
+    "ignore": [
+      { "type": "folder", "value": "docs" },
+      { "type": "folder", "value": "skills" },
+      { "type": "folder", "value": "qa" },
+      { "type": "folder", "value": "node_modules" },
+      { "type": "file", "value": "*.docx" },
+      { "type": "file", "value": "sample_*" },
+      { "type": "file", "value": "gen_docx.py" }
+    ],
+    "include": []
+  },
+  "editorSetting": {},
+  "cloudfunctionTemplateRoot": "cloudfunctionTemplate/"
 }

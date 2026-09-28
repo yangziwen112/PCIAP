@@ -2,8 +2,5 @@
   "navigationBarTitleText": "我的订阅",
   "enablePullDownRefresh": true,
   "backgroundColor": "#667eea",
-  "backgroundTextStyle": "light",
-  "usingComponents": {
-    "tag-chip": "../../components/tag-chip/index"
-  }
+  "backgroundTextStyle": "light"
 } 

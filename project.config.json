@@ -30,7 +30,7 @@
     "ignore": [],
     "include": []
   },
-  "appid": "wx3e0ab3ad750ab3f2",
+  "appid": "touristappid",
   "editorSetting": {},
   "libVersion": "3.10.0",
   "cloudfunctionRoot": "miniapp-1/cloudfunctions/",

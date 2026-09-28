@@ -1,0 +1,35 @@
+playbook_version: "1.0.0"
+repository: "yangziwen112/-ai"
+project: "PCIAP campus information agent"
+description: "微信小程序校园信息聚合与证据约束 Agent"
+topics:
+  - wechat-mini-program
+  - wechat-cloud
+  - campus-information
+  - ai-agent
+  - rag
+  - langgraph
+  - source-governance
+  - education-technology
+  - javascript
+  - nodejs
+  - privacy-by-design
+readme:
+  value_proposition: verified
+  real_demo: verified
+  quickstart: verified
+  english_quickstart: pending
+  limitations: verified
+distribution:
+  awesome_list_pr: pending
+  technical_article: pending
+  video_demo: pending
+  spam_free: verified
+maintenance:
+  issue_response: planned
+  release_notes: planned
+  monthly_metadata_review: planned
+integrity:
+  no_fake_stars: true
+  no_fake_metrics: true
+  no_secrets: true

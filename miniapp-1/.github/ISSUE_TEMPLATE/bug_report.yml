@@ -1,0 +1,32 @@
+name: 缺陷报告
+description: 报告可稳定复现的功能或数据问题
+title: "[Bug] "
+labels: [bug, needs-triage]
+body:
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: 复现步骤
+      description: 请写清页面、用户角色、输入和实际结果。
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期望结果
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: 环境
+      placeholder: 微信开发者工具版本、基础库版本、云函数环境
+    validations:
+      required: true
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: 隐私确认
+      options:
+        - label: 我已移除真实用户信息、凭证和未脱敏截图。
+          required: true

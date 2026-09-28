@@ -10,17 +10,23 @@
 } 
 
 :root {
-  --color-primary: #2F6BFF;
-  --color-success: #10B981;
-  --color-muted: #6B7280;
-  --color-text: #111827;
-  --bg: #F7F8FA;
+  --color-primary: #187c68;
+  --color-success: #21b18a;
+  --color-muted: #71858a;
+  --color-text: #18323a;
+  --bg: #f5f8f7;
+  --surface: #ffffff;
+  --line: #e3ece9;
 }
 
 page {
-  background: var(--bg);
+  min-height: 100vh;
   color: var(--color-text);
+  background: var(--bg);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
 }
+
+button::after { border: 0; }
 
 .text-muted {
   color: var(--color-muted);
@@ -33,9 +39,10 @@ page {
 }
 
 .card {
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  background: var(--surface);
+  border: 1rpx solid var(--line);
+  border-radius: 16rpx;
+  box-shadow: 0 1rpx 2rpx rgba(20, 50, 54, .04);
   overflow: hidden;
 }
 

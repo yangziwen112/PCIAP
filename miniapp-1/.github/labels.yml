@@ -1,0 +1,23 @@
+# GitHub Labels 建议清单；这是可审阅的声明文件，不会自动修改远程仓库标签。
+labels:
+  - name: bug
+    color: d73a4a
+    description: 可复现的软件缺陷
+  - name: needs-triage
+    color: fbca04
+    description: 等待维护者确认范围
+  - name: enhancement
+    color: a2eeef
+    description: 可验收的产品或工程改进
+  - name: product
+    color: 7057ff
+    description: 用户场景和产品流程
+  - name: data-quality
+    color: 0e8a16
+    description: 来源、时间和内容质量
+  - name: privacy
+    color: b60205
+    description: 隐私、权限或敏感数据边界
+  - name: agent-safety
+    color: 5319e7
+    description: AI 工具调用、审核和失败降级

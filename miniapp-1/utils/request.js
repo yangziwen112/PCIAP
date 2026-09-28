@@ -1,7 +1,10 @@
 const app = getApp()
 
 export function callApi(route, data = {}) {
-  return app?.callApi ? app.callApi(route, data) : Promise.resolve({})
+  if (!app?.callApi) {
+    return Promise.reject(new Error('App not initialized'))
+  }
+  return app.callApi(route, data)
 }
 
 export function withLoading(promise, title = '加载中') {

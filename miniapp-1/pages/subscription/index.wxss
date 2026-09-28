@@ -37,11 +37,12 @@
 /* 卡片区域 */
 .section-card {
   margin: 0 24rpx 24rpx;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.98);
   border-radius: 24rpx;
   overflow: hidden;
-  box-shadow: 0 12rpx 28rpx rgba(76, 102, 190, 0.18);
-  backdrop-filter: blur(10rpx);
+  box-shadow: 0 12rpx 32rpx rgba(76, 102, 190, 0.22);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
 /* 卡片头部 */
@@ -50,7 +51,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 28rpx 28rpx 20rpx;
-  border-bottom: 2rpx solid #f1f5f9;
+  border-bottom: 1px solid #f1f5f9;
 }
 
 .header-left {
@@ -73,54 +74,55 @@
 .source-count {
   font-size: 24rpx;
   color: #6b8cff;
-  background: rgba(107, 140, 255, 0.1);
-  padding: 6rpx 16rpx;
+  background: rgba(107, 140, 255, 0.12);
+  padding: 8rpx 18rpx;
   border-radius: 999rpx;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 /* 所有标签容器 */
 .all-tags-container {
-  padding: 12rpx 0;
+  padding: 8rpx 0;
 }
 
 .tag-option {
   display: flex;
   align-items: center;
   padding: 24rpx 28rpx;
-  transition: all 0.3s;
+  transition: all 0.25s ease;
   position: relative;
   background: #ffffff;
 }
 
 .tag-option:active {
-  background: rgba(107, 140, 255, 0.05);
+  background: rgba(107, 140, 255, 0.06);
 }
 
 .tag-option.followed {
-  background: linear-gradient(135deg, rgba(107, 140, 255, 0.08) 0%, rgba(124, 89, 198, 0.08) 100%);
+  background: linear-gradient(135deg, rgba(107, 140, 255, 0.06) 0%, rgba(124, 89, 198, 0.06) 100%);
   border-left: 6rpx solid #6b8cff;
 }
 
 .tag-option.followed:active {
-  background: linear-gradient(135deg, rgba(107, 140, 255, 0.12) 0%, rgba(124, 89, 198, 0.12) 100%);
+  background: linear-gradient(135deg, rgba(107, 140, 255, 0.1) 0%, rgba(124, 89, 198, 0.1) 100%);
 }
 
 .tag-icon {
   font-size: 40rpx;
-  width: 64rpx;
-  height: 64rpx;
+  width: 68rpx;
+  height: 68rpx;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, rgba(107, 140, 255, 0.1) 0%, rgba(124, 89, 198, 0.1) 100%);
-  border-radius: 16rpx;
+  background: linear-gradient(135deg, rgba(107, 140, 255, 0.12) 0%, rgba(124, 89, 198, 0.12) 100%);
+  border-radius: 18rpx;
   margin-right: 20rpx;
+  transition: all 0.25s ease;
 }
 
 .tag-option.followed .tag-icon {
   background: linear-gradient(135deg, #6b8cff 0%, #7c59c6 100%);
-  box-shadow: 0 4rpx 12rpx rgba(107, 140, 255, 0.3);
+  box-shadow: 0 6rpx 16rpx rgba(107, 140, 255, 0.35);
 }
 
 .tag-info {
@@ -146,14 +148,15 @@
   display: flex;
   align-items: center;
   gap: 8rpx;
-  padding: 10rpx 20rpx;
+  padding: 10rpx 22rpx;
   border-radius: 999rpx;
   background: rgba(107, 140, 255, 0.1);
-  transition: all 0.3s;
+  transition: all 0.25s ease;
 }
 
 .tag-option.followed .tag-status {
   background: linear-gradient(135deg, #6b8cff 0%, #7c59c6 100%);
+  box-shadow: 0 4rpx 12rpx rgba(107, 140, 255, 0.3);
 }
 
 .status-icon {
@@ -178,12 +181,13 @@
 
 /* 已关注标签详情容器 */
 .followed-tags-container {
-  padding: 12rpx 0;
+  padding: 8rpx 0;
 }
 
 .followed-tag-item {
   padding: 24rpx 28rpx;
-  border-bottom: 2rpx solid #f1f5f9;
+  border-bottom: 1px solid #f1f5f9;
+  background: linear-gradient(135deg, rgba(107, 140, 255, 0.03) 0%, rgba(124, 89, 198, 0.03) 100%);
 }
 
 .followed-tag-item:last-child {
@@ -201,10 +205,10 @@
   display: flex;
   align-items: center;
   gap: 12rpx;
-  padding: 10rpx 20rpx;
+  padding: 10rpx 22rpx;
   background: linear-gradient(135deg, #6b8cff 0%, #7c59c6 100%);
   border-radius: 999rpx;
-  box-shadow: 0 4rpx 12rpx rgba(107, 140, 255, 0.25);
+  box-shadow: 0 6rpx 16rpx rgba(107, 140, 255, 0.3);
 }
 
 .badge-icon {
@@ -218,26 +222,27 @@
 }
 
 .unfollow-btn {
-  padding: 8rpx 16rpx;
-  background: rgba(239, 68, 68, 0.1);
+  padding: 8rpx 18rpx;
+  background: rgba(239, 68, 68, 0.08);
   border-radius: 999rpx;
-  transition: all 0.3s;
+  transition: all 0.25s ease;
 }
 
 .unfollow-btn:active {
-  background: rgba(239, 68, 68, 0.2);
+  background: rgba(239, 68, 68, 0.16);
   transform: scale(0.95);
 }
 
 .unfollow-text {
   font-size: 24rpx;
   color: #ef4444;
+  font-weight: 500;
 }
 
 .tag-detail {
-  padding: 16rpx 20rpx;
+  padding: 16rpx 22rpx;
   background: rgba(107, 140, 255, 0.05);
-  border-radius: 12rpx;
+  border-radius: 14rpx;
   display: flex;
   flex-direction: column;
   gap: 8rpx;
@@ -252,7 +257,7 @@
 .detail-count {
   font-size: 24rpx;
   color: #6b8cff;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 /* 空状态 */
@@ -277,16 +282,16 @@
 
 /* 相关内容容器 */
 .related-contents-container {
-  padding: 12rpx 0;
+  padding: 8rpx 0;
 }
 
 .content-count {
   font-size: 24rpx;
   color: #6b8cff;
   background: rgba(107, 140, 255, 0.1);
-  padding: 6rpx 16rpx;
+  padding: 8rpx 18rpx;
   border-radius: 999rpx;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .loading-hint {
@@ -302,9 +307,11 @@
 }
 
 .content-item {
-  padding: 24rpx 28rpx;
-  border-bottom: 2rpx solid #f1f5f9;
-  transition: background 0.2s;
+  padding: 26rpx 28rpx;
+  border-bottom: 1px solid #f1f5f9;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .content-item:last-child {
@@ -313,6 +320,7 @@
 
 .content-item:active {
   background: rgba(107, 140, 255, 0.05);
+  transform: scale(0.995);
 }
 
 .content-header {
@@ -326,7 +334,7 @@
   display: inline-flex;
   align-items: center;
   gap: 6rpx;
-  padding: 6rpx 12rpx;
+  padding: 6rpx 14rpx;
   background: linear-gradient(135deg, rgba(107, 140, 255, 0.1) 0%, rgba(124, 89, 198, 0.1) 100%);
   border-radius: 999rpx;
 }
@@ -338,7 +346,7 @@
 .tag-badge-text {
   font-size: 22rpx;
   color: #6b8cff;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .content-time {
@@ -404,9 +412,9 @@
 .subscription-tip {
   margin: 0 24rpx;
   padding: 20rpx 24rpx;
-  background: rgba(255, 255, 255, 0.12);
-  border: 2rpx solid rgba(255, 255, 255, 0.2);
-  border-radius: 16rpx;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 18rpx;
   display: flex;
   align-items: center;
   gap: 12rpx;
@@ -420,6 +428,6 @@
 .tip-text {
   flex: 1;
   font-size: 24rpx;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.92);
   line-height: 1.6;
 } 

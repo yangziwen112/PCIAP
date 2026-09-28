@@ -1,0 +1,52 @@
+name: validate-campus-platform
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    concurrency:
+      group: campus-platform-validate-${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
+    defaults:
+      run:
+        working-directory: miniapp-1
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: miniapp-1/cloudfunctions/rag/package-lock.json
+      - name: Install RAG dependencies
+        run: npm ci --prefix cloudfunctions/rag
+      - name: Run workflow tests
+        run: |
+          npm test --prefix cloudfunctions/rag
+          npm test --prefix cloudfunctions/crawler
+          node cloudfunctions/api/test/user-display.test.js
+          node cloudfunctions/api/test/motion-presets.test.js
+      - name: Check JavaScript syntax
+        shell: bash
+        run: |
+          node --check app.js
+          node --check cloudfunctions/api/index.js
+          node --check cloudfunctions/crawler/index.js
+          node --check pages/chat/index.js
+          node --check pages/campus-wall/publish.js
+      - name: Check public tree for sensitive files
+        shell: bash
+        run: |
+          blocked="$(git -C .. ls-files | grep -E '(^|/)(\.env|node_modules/|.*\.(key|pem)$)' || true)"
+          if [ -n "$blocked" ]; then
+            echo "Forbidden tracked files detected:"
+            echo "$blocked"
+            exit 1
+          fi

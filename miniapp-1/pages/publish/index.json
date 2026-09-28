@@ -1,8 +1,5 @@
 {
   "navigationBarTitleText": "发布信息",
   "enablePullDownRefresh": false,
-  "navigationStyle": "custom",
-  "usingComponents": {
-    "tag-chip": "../../components/tag-chip/index"
-  }
+  "navigationStyle": "custom"
 }

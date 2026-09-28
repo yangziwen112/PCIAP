@@ -1,5 +1,5 @@
 import { callApi, toast } from '../../utils/request'
-import { isLoggedIn, getUserId } from '../../utils/auth'
+import { isLoggedIn, promptLogin, waitForAuthReady } from '../../utils/auth'
 
 Page({
   data: {
@@ -13,16 +13,12 @@ Page({
   },
   
   async onShow() {
-    console.log('📌 历史页 onShow 触发')
+    await waitForAuthReady()
     if (!isLoggedIn()) {
-      console.log('❌ 未登录，重定向到登录页')
-      wx.showToast({ title: '请先登录', icon: 'none' })
-      setTimeout(() => {
-        wx.switchTab({ url: '/pages/profile/index' })
-      }, 1000)
+      const goingLogin = await promptLogin({ content: '登录后可以查看你的浏览记录，快速找回看过的资讯。', redirect: '/pages/history/index' })
+      if (!goingLogin) wx.navigateBack({ fail: () => wx.switchTab({ url: '/pages/home/index' }) })
       return
     }
-    console.log('✅ 已登录，用户ID:', getUserId())
     this.loadList(true)
   },
   
@@ -36,31 +32,18 @@ Page({
   },
   
   async loadList(reset = false) {
-    console.log('🔄 开始加载历史列表，reset:', reset)
+    if (this.data.loading) return
     this.setData({ loading: true })
     const page = reset ? 1 : this.data.page + 1
     
     try {
-      console.log('📤 调用 history/list API:')
-      console.log('  - page:', page)
-      console.log('  - pageSize:', this.data.pageSize)
-      
       const res = await callApi('history/list', { 
         page, 
         pageSize: this.data.pageSize 
       })
       
-      console.log('📥 API 响应:', res)
-      console.log('  - 返回项数:', (res.list || []).length)
-      console.log('  - totalCount:', res.totalCount)
-      console.log('  - hasMore:', res.hasMore)
-      
       const list = reset ? (res.list || []) : this.data.list.concat(res.list || [])
       const totalCount = res.totalCount || list.length
-      
-      console.log('✅ 列表更新:')
-      console.log('  - 总项数:', list.length)
-      console.log('  - totalCount:', totalCount)
       
       this.setData({ 
         list, 
@@ -80,7 +63,6 @@ Page({
   // 删除单条历史
   async onRemoveHistory(e) {
     const id = e.currentTarget.dataset.id
-    console.log('🗑️ 删除历史:', id)
     
     wx.showModal({
       title: '删除历史',
@@ -106,7 +88,6 @@ Page({
   
   // 清空所有历史
   async onClearAll() {
-    console.log('🗑️ 清空所有历史')
     if (this.data.totalCount === 0) {
       toast('暂无历史')
       return

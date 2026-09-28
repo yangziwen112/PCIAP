@@ -7,14 +7,13 @@ Page({
     password: '',
     confirmPassword: '',
     idCardLast4: '',
-    role: 'student',
     showPassword: false,
     canSubmit: false,
     isLoading: false
   },
 
   onUsernameInput(e) {
-    const username = e.detail.value.trim()
+    const username = e.detail.value.replace(/\D/g, '').slice(0, 20)
     this.setData({ username }, this.checkCanSubmit)
   },
 
@@ -42,26 +41,20 @@ Page({
     this.setData({ showPassword: !this.data.showPassword })
   },
 
-  selectRole(e) {
-    const role = e.currentTarget.dataset.role
-    this.setData({ role })
-  },
-
   checkCanSubmit() {
-    const { username, nickname, password, confirmPassword, idCardLast4, role } = this.data
-    const canSubmit = username.length > 0 && 
+    const { username, nickname, password, confirmPassword, idCardLast4 } = this.data
+    const canSubmit = username.length >= 4 &&
                      nickname.length > 0 &&
                      password.length >= 6 && 
                      confirmPassword.length >= 6 &&
-                     idCardLast4.length === 4 &&
-                     role
+                     idCardLast4.length === 4
     this.setData({ canSubmit })
   },
 
   async onRegister() {
     if (!this.data.canSubmit || this.data.isLoading) return
 
-    const { username, nickname, password, confirmPassword, idCardLast4, role } = this.data
+    const { username, nickname, password, confirmPassword, idCardLast4 } = this.data
 
     // 验证两次密码
     if (password !== confirmPassword) {
@@ -93,7 +86,6 @@ Page({
         username,
         nickname,
         password,
-        role,
         idCardLast4
       })
 

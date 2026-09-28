@@ -11,8 +11,8 @@
     <!-- 标题 -->
     <view class="login-header">
       <text class="app-icon">🎓</text>
-      <text class="app-name">校园活动平台</text>
-      <text class="app-subtitle">PCIAP</text>
+      <text class="app-name">民大通</text>
+      <text class="app-subtitle">校园信息聚合平台</text>
     </view>
 
     <!-- 表单 -->
