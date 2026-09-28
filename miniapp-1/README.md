@@ -205,3 +205,7 @@ docs/                          产品、架构、部署和研究文档
 ## 许可证
 
 本项目沿用仓库中的许可证。使用校园官网和公共平台内容时，请遵守来源网站的访问规则、版权要求和隐私规范。
+
+### Maintenance note
+
+- Last repository maintenance: 2026-09-28 (Asia/Shanghai).
