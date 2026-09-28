@@ -54,4 +54,8 @@ jobs:
             echo "$blocked"
             exit 1
           fi
-          echo "Known WeChat project.private.config.json files are configuration metadata, not credentials."
+          if git grep -nI -E 'sk-[A-Za-z0-9]{20,}|AKIA[0-9A-Z]{16}|-----BEGIN (RSA|OPENSSH|EC|DSA) PRIVATE KEY-----|gh[pousr]_[A-Za-z0-9]{20,}|xox[baprs]-' -- . ':!*.lock'; then
+            echo "High-confidence credential pattern detected in tracked text."
+            exit 1
+          fi
+          echo "Tracked file and credential checks passed."
