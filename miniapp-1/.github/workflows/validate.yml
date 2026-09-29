@@ -24,23 +24,31 @@ jobs:
         with:
           node-version: 20
           cache: npm
-          cache-dependency-path: miniapp-1/cloudfunctions/rag/package-lock.json
+          cache-dependency-path: |
+            miniapp-1/cloudfunctions/rag/package-lock.json
+            miniapp-1/cloudfunctions/crawler/package-lock.json
       - name: Install RAG dependencies
         run: npm ci --prefix cloudfunctions/rag
+      - name: Install crawler dependencies
+        run: npm ci --prefix cloudfunctions/crawler
       - name: Run workflow tests
         run: |
           npm test --prefix cloudfunctions/rag
           npm test --prefix cloudfunctions/crawler
           node cloudfunctions/api/test/user-display.test.js
           node cloudfunctions/api/test/motion-presets.test.js
-      - name: Check JavaScript syntax
+      - name: Check all tracked JavaScript syntax
         shell: bash
         run: |
-          node --check app.js
-          node --check cloudfunctions/api/index.js
-          node --check cloudfunctions/crawler/index.js
-          node --check pages/chat/index.js
-          node --check pages/campus-wall/publish.js
+          failed=0
+          while IFS= read -r file; do
+            if ! node --check "$file"; then
+              failed=1
+            fi
+          done < <(git -C .. ls-files | grep -E '^miniapp-1/.*\.js$' | grep -v '/node_modules/' | sed 's#^miniapp-1/##' || true)
+          if [ "$failed" -ne 0 ]; then
+            exit 1
+          fi
       - name: Check public tree for sensitive files
         shell: bash
         run: |

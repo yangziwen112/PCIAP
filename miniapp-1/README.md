@@ -208,4 +208,4 @@ docs/                          产品、架构、部署和研究文档
 
 ### Maintenance note
 
-- Last repository maintenance: 2026-09-28 (Asia/Shanghai).
+- Last repository maintenance: 2026-09-29 (Asia/Shanghai).
