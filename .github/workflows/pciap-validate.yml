@@ -45,6 +45,16 @@ jobs:
         run: |
           find . -type f -name '*.js' -not -path '*/node_modules/*' -print0 \
             | xargs -0 -r -n1 node --check
+      - name: Validate public project metadata
+        run: |
+          node - <<'NODE'
+          const fs = require('fs')
+          for (const file of ['app.json', 'project.config.json']) {
+            JSON.parse(fs.readFileSync(file, 'utf8'))
+            console.log(`Validated ${file}`)
+          }
+          NODE
+          git diff --check
       - name: Check tracked tree for sensitive files
         working-directory: .
         run: |
